@@ -1,6 +1,5 @@
 <?php
 $loc = str_replace("accounts", "", __DIR__);
-/*
 require_once "config.php";
 
 $lname = $fname = "";
@@ -64,7 +63,6 @@ if($stmt = $mysqli->prepare($sqlsub)){
         }
     }
 }
-*/
 ?>
 
 <html>
