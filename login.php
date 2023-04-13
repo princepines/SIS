@@ -2,38 +2,38 @@
 /*
 // Initialize the session
 session_start();
- 
+
 // Check if the user is already logged in, if yes then redirect him to welcome page
 if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
     // Redirect user to student page if account is student
     if($_SESSION["account"] == "student"){
-        header("location: student.php");
+        header("location: accounts/student.php");
     }
     // Redirect user to teacher page if account is teacher
     elseif($_SESSION["account"] == "teacher"){
-        header("location: teacher.php");
+        header("location: accounts/teacher.php");
     }
     // Redirect user to cashier page if account is cashier
     elseif($_SESSION["account"] == "cashier"){
-        header("location: cashier.php");
+        header("location: accounts/cashier.php");
     }
     // Redirect user to registrar page if account is registrar
     elseif($_SESSION["account"] == "registrar"){
-        header("location: registrar.php");
+        header("location: accounts/registrar.php");
     }
     exit;
 }
- 
+
 // Include config file
 require_once "config.php";
- 
+
 // Define variables and initialize with empty values
 $username = $password = "";
 $username_err = $password_err = $login_err = "";
- 
+
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
- 
+    
     // Check if username is empty
     if(empty(trim($_POST["username"]))){
         $username_err = "Please enter username.";
@@ -82,21 +82,21 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             
                             // Redirect user to student page if account is student
                             if($account == "student"){
-                                header("location: student.php");
+                                header("location: accounts/student.php");
                             }
                             // Redirect user to teacher page if account is teacher
                             elseif($account == "teacher"){
-                                header("location: teacher.php");
+                                header("location: accounts/teacher.php");
                             }
                             // Redirect user to cashier page if account is cashier
                             elseif($account == "cashier"){
-                                header("location: cashier.php");
+                                header("location: accounts/cashier.php");
                             }
                             // Redirect user to registrar page if account is registrar
                             elseif($account == "registrar"){
-                                header("location: registrar.php");
+                                header("location: accounts/registrar.php");
                             }
-
+                            
                         } else{
                             // Password is not valid, display a generic error message
                             $login_err = "Invalid username or password.";
@@ -109,7 +109,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             } else{
                 echo "Oops! Something went wrong. Please try again later.";
             }
-
+            
             // Close statement
             $stmt->close();
         }
@@ -122,36 +122,38 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 ?>
 
 <html>
-    <head>
-        <title>SIS Login</title>
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-    <div class="box">
-            <h1>Login</h1>
-            <p>Please fill in your credentials to login.</p>
-
-            <?php 
-            if(!empty($login_err)){
-                echo '<div class="alert alert-danger">' . $login_err . '</div>';
-            }        
-            ?>
-
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-            <div class="form-group">
-                <label>Username</label>
-                <input type="text" name="username" class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>">
-                <span class="invalid-feedback"><?php //echo $username_err; ?></span>
-            </div>    
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" name="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>">
-                <span class="invalid-feedback"><?php //echo $password_err; ?></span>
+<head>
+    <title>SIS Login</title>
+    <?php require_once "req/head.php"; ?>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Login</h1>
+                <p>Please fill in your credentials to login.</p>
+                
+                <?php 
+                if(!empty($login_err)){
+                    echo '<div class="alert alert-danger">' . $login_err . '</div>';
+                }        
+                ?>
+                
+                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                        <label class="form-label">Username</label>
+                        <input type="text" name="username" class="form-control">
+                        <span class="invalid-feedback"><?php //echo $username_err; ?></span>
+                        <label class="form-label">Password</label>
+                        <input type="password" name="password" class="form-control">
+                        <span class="invalid-feedback"><?php //echo $password_err; ?></span>
+                        <input type="submit" class="btn btn-primary" value="Login">
+                        <button type="button"  class="btn btn-link mb-3" onclick="">Forgot Password?</button><br>   
+                </form>
             </div>
-            <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="Login">
+            <div class="col">
+                <img src="welcome.png" alt="welcome" width="500" height="500">
             </div>
-        </form>
+        </div>
     </div>
-    </body>
+</body>
 </html>

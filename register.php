@@ -5,6 +5,7 @@ require_once "config.php";
 // Define variables and initialize with empty values
 $username = $password = $confirm_password = $account = "";
 $username_err = $password_err = $confirm_password_err = "";
+$fname = $mname = $lname = "";
  
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -54,8 +55,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Validate password
     if(empty(trim($_POST["password"]))){
         $password_err = "Please enter a password.";     
-    } elseif(strlen(trim($_POST["password"])) < 6){
-        $password_err = "Password must have atleast 6 characters.";
+    } elseif(strlen(trim($_POST["password"])) < 8){
+        $password_err = "Password must have atleast 8 characters.";
     } else{
         $password = trim($_POST["password"]);
     }
@@ -74,13 +75,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     if(empty($username_err) && empty($password_err) && empty($confirm_password_err)){
         
         // Prepare an insert statement
-        $sql = "INSERT INTO users (username, password, account) VALUES (?, ?, ?)";
+        $sql = "INSERT INTO users (username, password, account, firstname, middlename, lastname) VALUES (?, ?, ?, ?, ?, ?)";
          
         if($stmt = $mysqli->prepare($sql)){
             // Bind variables to the prepared statement as parameters
-            $stmt->bind_param("sss", $param_username, $param_password, $param_account);
+            $stmt->bind_param("sssss", $param_username, $param_password, $param_account, $param_fname, $param_mname, $param_lname);
             
             // Set parameters
+            $param_fname = $fname;
+            $param_mname = $mname;
+            $param_lname = $lname;
             $param_account = $account;
             $param_username = $username;
             $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
@@ -103,12 +107,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 }
 ?>
  
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Registration</title>
-    <link rel="stylesheet" href="style.css">
+    <?php require_once 'req/head.php'; ?>
 </head>
 <body>
     <div class="wrapper">
@@ -116,18 +117,30 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         <p>Please fill this form to create an account.</p>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <div class="form-group">
+                <label>First Name</label>
+                <input type="text" name="fname" class="form-control ">
+            </div>
+            <div class="form-group">
+                <label>Middle Name</label>
+                <input type="text" name="mname" class="form-control ">
+            </div>
+            <div class="form-group">
+                <label>Last Name</label>
+                <input type="text" name="lname" class="form-control ">
+            </div>
+            <div class="form-group">
                 <label>Username</label>
-                <input type="text" name="username" class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
+                <input type="text" name="username" class="form-control  ">
                 <span class="invalid-feedback"><?php echo $username_err; ?></span>
             </div>
             <div class="form-group">
                 <label>Password</label>
-                <input type="password" name="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $password; ?>">
+                <input type="password" name="password" class="form-control  " value="<?php echo $password; ?>">
                 <span class="invalid-feedback"><?php echo $password_err; ?></span>
             </div>
             <div class="form-group">
                 <label>Confirm Password</label>
-                <input type="password" name="confirm_password" class="form-control <?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $confirm_password; ?>">
+                <input type="password" name="confirm_password" class="form-control" value="<?php echo $confirm_password; ?>">
                 <span class="invalid-feedback"><?php echo $confirm_password_err; ?></span>
             </div>
             <div class="form-group">
