@@ -8,7 +8,7 @@ define('DB_NAME', 'sisdb');
 define('DB_PORT', '3306');
  
 /* Attempt to connect to MySQL database */
-$mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_PORT);
+$mysqli = new mysqli (DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_PORT);
  
 // Check connection
 if($mysqli === false){
