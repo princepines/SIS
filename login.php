@@ -2,7 +2,7 @@
 // Initialize the session
 session_start();
 
-// Check if the user is already logged in, if yes then redirect him to welcome page
+// Check if the user is already logged in, if yes then redirect him to page
 if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
     // Redirect user to student page if account is student
     if($_SESSION["account"] == "student"){
@@ -24,11 +24,12 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
 }
 
 // Include config file
-require_once "config.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . '/SIS/config.php';
 
 // Define variables and initialize with empty values
 $username = $password = "";
 $username_err = $password_err = $login_err = "";
+$account = "";
 
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -65,9 +66,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 $stmt->store_result();
                 
                 // Check if username exists, if yes then verify password
-                if($stmt->num_rows == 1){                    
+                if($stmt->num_rows == 1){                  
                     // Bind result variables
-                    $stmt->bind_result($id, $username, $hashed_password, $account);
+                    $stmt->bind_result($ids, $username, $hashed_password, $account);
                     if($stmt->fetch()){
                         if(password_verify($password, $hashed_password)){
                             // Password is correct, so start a new session
@@ -75,7 +76,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             
                             // Store data in session variables
                             $_SESSION["loggedin"] = true;
-                            $_SESSION["id"] = $id;
+                            //$_SESSION["id"] = $ids;
+                            setcookie("id", $ids, time() + (86400 * 30), "/"); // 86400 = 1 day
                             $_SESSION["username"] = $username;
                             $_SESSION["account"] = $account;                          
                             
@@ -122,7 +124,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <html>
 <head>
     <title>SIS Login</title>
-    <?php require_once "req/head.php"; ?>
+    <?php require $path . "req/head.php"; ?>
 </head>
 <body>
     <div class="container">

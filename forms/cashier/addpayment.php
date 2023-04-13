@@ -1,21 +1,5 @@
 <?php
-$loc = str_replace("forms/cashier", "", __DIR__);
-
-require_once $loc . 'config.php';
-
-$popup = "<script language='javascript' type='text/javascript'>
-<!--
-function myFunction() {
-    alert('Successfully added payment!');
-</script>
-";
-
-$failed = "<script language='javascript' type='text/javascript'>
-<!--
-function myFunction() {
-    alert('Something went wrong. Please try again later.');
-</script>
-";
+require_once $_SERVER['DOCUMENT_ROOT'] . '/SIS/config.php';
 
 // Define variables and initialize with empty values
 $id = $amount = $paymenttype = "";
@@ -62,9 +46,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             // Attempt to execute the prepared statement
             if($stmt->execute()){
                 // Redirect to login page
-                echo $popup;
+                echo '<script>alert("Successfully Added User!")</script>';
             } else{
-                echo $failed;
+                echo '<script>alert("An Error Occured! Please try again later.")</script>';
             }
         }
          
@@ -80,10 +64,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <html>
     <head>
         <title>Add Payment</title>
-        <?php require $loc . 'req/head.php'; ?>
+        <?php require $path . 'req/head.php'; ?>
     </head>
     <body>
-        <?php require $loc . 'req/navC.php'; ?>
+        <?php require $path . 'req/navC.php'; ?>
         <div class="container">
         <h2>Add Payment</h2>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">

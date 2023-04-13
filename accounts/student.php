@@ -1,8 +1,7 @@
 <?php
-$loc = str_replace("accounts", "", __DIR__);
-require_once "config.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/SIS/config.php";
 
-$lname = $fname = "";
+$fname = $lname = "";
 // query the sql to get the firstname and lastname of user
 $sql = "SELECT firstname, lastname FROM users WHERE id = ?";
 if($stmt = $mysqli->prepare($sql)){
@@ -10,7 +9,7 @@ if($stmt = $mysqli->prepare($sql)){
     $stmt->bind_param("s", $param_id);
     
     // Set parameters
-    $param_id = $_SESSION["id"];
+    $param_id = $_COOKIE["id"];
     
     // Attempt to execute the prepared statement
     if($stmt->execute()){
@@ -21,6 +20,10 @@ if($stmt = $mysqli->prepare($sql)){
         if($stmt->num_rows == 1){                    
             // Bind result variables
             $stmt->bind_result($fname, $lname);
+            if($stmt->fetch()){
+                $fname = $fname;
+                $lname = $lname;
+            }
         }
     }
 }
@@ -41,6 +44,7 @@ if($stmt = $mysqli->prepare($sqlnews)){
     }
 }
 
+/*
 // fetch the subjects of the user
 $subjects = array();
 $sqlsub = "SELECT subject FROM subjects WHERE id = ?";
@@ -63,21 +67,22 @@ if($stmt = $mysqli->prepare($sqlsub)){
         }
     }
 }
+*/
 ?>
 
 <html>
 <head>
-    <title>Hello <?php //echo $fname; ?></title>
-    <?php require $loc . 'req/head.php'; ?>
+    <title><?php echo $fname ?> Information</title>
+    <?php require $path . 'req/head.php'; ?>
 </head>
 <body style="background-color:whitesmoke !important;">
-    <?php require $loc . 'req/navS.php'; ?>
+    <?php require $path . 'req/navS.php'; ?>
     <div class="main">
-        <h1>Welcome, <?php //echo $fname; ?></h1><br>
+        <h1>Welcome, <?php echo $fname ?></h1><br>
         <div class="row">
             <div class="col">
                 <h3>News:</h3>
-                <p style="font-size: 18px;"><?php echo "test";//echo $news; ?></p>
+                <p style="font-size: 18px;"><?php echo $news; ?></p>
             </div>
             <div class="col">
                 <h3>Subjects</h3>

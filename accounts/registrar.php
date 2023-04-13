@@ -1,6 +1,5 @@
 <?php
-$loc = str_replace("accounts", "", __DIR__);
-require_once "config.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "SIS/config.php";
 
 $lname = $fname = "";
 // query the sql to get the firstname and lastname of user
@@ -10,7 +9,7 @@ if($stmt = $mysqli->prepare($sql)){
     $stmt->bind_param("s", $param_id);
     
     // Set parameters
-    $param_id = $_SESSION["id"];
+    $param_id = $_COOKIE["id"];
     
     // Attempt to execute the prepared statement
     if($stmt->execute()){
@@ -44,17 +43,17 @@ if($stmt = $mysqli->prepare($sqlnews)){
 
 <html>
 <head>
-    <title>Hello <?php //echo $fname; ?></title>
-    <?php require $loc . 'req/head.php'; ?>
+    <title><?php echo $fname ?> Information</title>
+    <?php require $path . 'req/head.php'; ?>
 </head>
 <body style="background-color:whitesmoke !important;">
-    <?php require $loc . 'req/navR.php'; ?>
+    <?php require $path . 'req/navR.php'; ?>
     <div class="main">
-        <h1>Welcome, <?php //echo $fname; ?></h1><br>
+    <h1>Welcome, <?php echo $fname ?></h1><br>
         <div class="row">
             <div class="col">
                 <h3>News:</h3>
-                <p style="font-size: 18px;"><?php echo "test";//echo $news; ?></p>
+                <p style="font-size: 18px;"><?php echo $news; ?></p>
             </div>
         </div>
     </div>

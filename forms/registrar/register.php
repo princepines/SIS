@@ -1,6 +1,7 @@
 <?php
+
 // Include config file
-require_once "config.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/SIS/config.php";
  
 // Define variables and initialize with empty values
 $username = $password = $confirm_password = $account = "";
@@ -10,6 +11,23 @@ $fname = $mname = $lname = "";
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
  
+    //Validate First, Middle nad Last
+    if(empty(trim($_POST["fname"]))){
+        $fname_err = "Please enter a first name.";
+    } else{
+        $fname = trim($_POST["fname"]);
+    }
+    if(empty(trim($_POST["mname"]))){
+        $mname_err = "Please enter a middle name.";
+    } else{
+        $mname = trim($_POST["mname"]);
+    }
+    if(empty(trim($_POST["lname"]))){
+        $lname_err = "Please enter a last name.";
+    } else{
+        $lname = trim($_POST["lname"]);
+    }
+
     // Validate Account type
     if(empty(trim($_POST["account"]))){
         $account_err = "Please enter an account type.";
@@ -79,7 +97,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
          
         if($stmt = $mysqli->prepare($sql)){
             // Bind variables to the prepared statement as parameters
-            $stmt->bind_param("sssss", $param_username, $param_password, $param_account, $param_fname, $param_mname, $param_lname);
+            $stmt->bind_param("ssssss", $param_username, $param_password, $param_account, $param_fname, $param_mname, $param_lname);
             
             // Set parameters
             $param_fname = $fname;
@@ -92,9 +110,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             // Attempt to execute the prepared statement
             if($stmt->execute()){
                 // Redirect to login page
-                echo "Registration successful";
+                echo '<script>alert("Successfully Added User!")</script>';
             } else{
-                echo "Oops! Something went wrong. Please try again later.";
+                echo '<script>alert("An Error Occured! Please try again later.")</script>';
             }
 
             // Close statement
@@ -109,12 +127,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
  
 <html>
 <head>
-    <?php require_once 'req/head.php'; ?>
+    <?php require $path . 'req/head.php'; ?>
 </head>
 <body>
-    <div class="wrapper">
-        <h2>Sign Up</h2>
-        <p>Please fill this form to create an account.</p>
+    <div class="container">
+        <h2>Register User</h2>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <div class="form-group">
                 <label>First Name</label>
@@ -151,6 +168,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     <option value="registrar">Registrar</option>
                     <option value="teacher">Teacher</option>
                 </select>
+            </div><br>
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Submit">
                 <input type="reset" class="btn btn-secondary ml-2" value="Reset">
