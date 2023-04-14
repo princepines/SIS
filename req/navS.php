@@ -6,8 +6,8 @@
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <div class="navbar-nav">
       <a class="nav-item nav-link active" href="/">Home</a>
-      <a class="nav-item nav-link" href="./forms/student/subjects.php">Subjects and Grades</a>
-      <a class="nav-item nav-link" href="./forms/student/payments.php">Payments</a>
+      <a class="nav-item nav-link" href="/SIS/forms/student/subjects.php">Subjects and Grades</a>
+      <a class="nav-item nav-link" href="/SIS/forms/student/payments.php">Payments</a>
       <a class="nav-item nav-link" href="../about.php">About</a>
       <a class="nav-item nav-link" href="../logout.php">Logout</a>      
     </div>

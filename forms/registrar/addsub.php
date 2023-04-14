@@ -1,6 +1,6 @@
+<?php
 // Create a bulk add subjects page can add multiple user and teacher can modify grades
 
-<?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/SIS/config.php';
 
 $id = $subject = array();
@@ -47,7 +47,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 }
             }
         }
-        echo '<script>alert("Successfully Added User!")</script>';
+        echo '<script>alert("Successfully Added Subject to user!")</script>';
         // Close statement
         $stmt->close();
     }
@@ -69,11 +69,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             <div class="form-group">
                 <label>Student ID's</label>
                 <input type="text" name="id" class="form-control">
-            </div>
+            </div><br>
             <div class="form-group">
-                <label>Subject Name</label>
-                <p>Insert Subject name, separated with commas</p>
+                <label>Subject Name</label><br>
+                <small>Insert Subject name, separated with commas</small>
                 <input type="text" name="subject" class="form-control">
+            </div><br>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Submit">
+                <input type="reset" class="btn btn-secondary ml-2" value="Reset">
             </div>
         </form>
     </div>

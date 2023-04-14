@@ -1,7 +1,5 @@
-// Show all payment Records of specific user
-
 <?php
-
+// Show all payment Records of specific user
 require_once $_SERVER['DOCUMENT_ROOT'] . '/SIS/config.php';
 
 //convert student id to name
@@ -39,7 +37,7 @@ function getStudentName($id){
         <?php require $path . 'req/head.php'; ?>
     </head>
     <body>
-        <?php require $path . 'req/navR.php'; ?>
+        <?php require $path . 'req/navS.php'; ?>
         <div class="container">
             <h1>Payment Records</h1>
             <table class="table table-striped">

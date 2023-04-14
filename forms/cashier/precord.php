@@ -1,6 +1,5 @@
-// Show all payment Records
-
 <?php
+// Show all payment Records
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/SIS/config.php';
 

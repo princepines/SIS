@@ -1,6 +1,5 @@
-// show subjects of a specific student
-
 <?php
+// show subjects of a specific student
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/SIS/config.php';
 ?>
@@ -11,13 +10,14 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/SIS/config.php';
     <?php require $path . 'req/head.php'; ?>
 </head>
 <body>
-    <?php require $path . 'req/navR.php'; ?>
+    <?php require $path . 'req/navS.php'; ?>
     <div class="container">
-        <h1>Enlisted Subjects</h1>
+        <h1>Enlisted Subjects and Recorded Grades</h1>
         <table class="table table-striped">
             <thead>
                 <tr>
                     <th scope="col">Subjects</th>
+                    <th scope="col">Grades</th>
                 </tr>
             </thead>
             <tbody>
@@ -49,6 +49,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/SIS/config.php';
                     }
                 }
                 ?>
+                // do grades section
             </tbody>
         </table>
     </body>
