@@ -14,44 +14,49 @@ $mysqli = new mysqli (DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME, DB_PORT);
 if($mysqli === false){
     die("ERROR: Could not connect. " . $mysqli->connect_error);
 } else {
-    // create database and tables for users, subjects, payments, grades and news.
-    $sql = "CREATE DATABASE IF NOT EXISTS sisdb";
+    // create tables for users, subjects, payments, grades and news.
+    $sql = "CREATE TABLE IF NOT EXISTS users (
+        id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+        firstname VARCHAR(255) NOT NULL,
+        middlename VARCHAR(255) NOT NULL,
+        lastname VARCHAR(255) NOT NULL,
+        username VARCHAR(100) NOT NULL UNIQUE,
+        password VARCHAR(255) NOT NULL,
+        account VARCHAR(100) NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )";
     if($mysqli->query($sql) === true){
-        $sql = "CREATE TABLE IF NOT EXISTS users (
-            id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-            firstname VARCHAR(255) NOT NULL,
-            middlename VARCHAR(255) NOT NULL,
-            lastname VARCHAR(255) NOT NULL,
-            username VARCHAR(100) NOT NULL UNIQUE,
-            password VARCHAR(255) NOT NULL,
-            account VARCHAR(100) NOT NULL,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        $sql = "CREATE TABLE IF NOT EXISTS subjects (
+            id INT NOT NULL,
+            subject VARCHAR(255) NOT NULL PRIMARY KEY,
+            FOREIGN KEY (id) REFERENCES users(id)
         )";
         if($mysqli->query($sql) === true){
-            $sql = "CREATE TABLE IF NOT EXISTS subjects (
-                id INT NOT NULL,
-                subject VARCHAR(255) NOT NULL PRIMARY KEY,
-                FOREIGN KEY (id) REFERENCES users(id)
+            $sql = "CREATE TABLE IF NOT EXISTS payments (
+                id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+                studentid INT NOT NULL,
+                amount INT NOT NULL,
+                paymenttype VARCHAR(100) NOT NULL,
+                date DATE NOT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (studentid) REFERENCES users(id)
             )";
             if($mysqli->query($sql) === true){
-                $sql = "CREATE TABLE IF NOT EXISTS payments (
+                $sql = "CREATE TABLE IF NOT EXISTS grades (
                     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
                     studentid INT NOT NULL,
-                    amount INT NOT NULL,
-                    paymenttype VARCHAR(100) NOT NULL,
-                    date DATE NOT NULL,
+                    subject VARCHAR(255) NOT NULL,
+                    grade INT NOT NULL,
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                    FOREIGN KEY (studentid) REFERENCES users(id)
+                    FOREIGN KEY (studentid) REFERENCES users(id),
+                    FOREIGN KEY (subject) REFERENCES subjects(subject)
                 )";
                 if($mysqli->query($sql) === true){
-                    $sql = "CREATE TABLE IF NOT EXISTS grades (
+                    $sql = "CREATE TABLE IF NOT EXISTS news (
                         id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-                        studentid INT NOT NULL,
-                        subject VARCHAR(255) NOT NULL,
-                        grade INT NOT NULL,
-                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                        FOREIGN KEY (studentid) REFERENCES users(id),
-                        FOREIGN KEY (subject) REFERENCES subjects(subject)
+                        title VARCHAR(255) NOT NULL,
+                        content TEXT NOT NULL,
+                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                     )";
                     if($mysqli->query($sql) === true){
                         echo "";
