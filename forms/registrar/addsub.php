@@ -51,31 +51,31 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         // Close statement
         $stmt->close();
     }
-    
     // Close connection
     $mysqli->close();
-    ?>
-    
-    <html>
-    <head>
-        <title>Bulk Add Subjects</title>
-        <?php require $path . 'req/head.php'; ?>
-    </head>
-    <body>
-        <?php require $path . 'req/navR.php'; ?>
-        <div class="container">
-            <h1>Bulk Add Subjects to Students</h1>
-            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                <div class="form-group">
-                    <label>Student ID's</label>
-                    <input type="text" name="id" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label>Subject Name</label>
-                    <p>Insert Subject name, separated with commas</p>
-                    <input type="text" name="subject" class="form-control">
-                </div>
-            </form>
-        </div>
-    </body>
-    </html>
+}
+?>
+
+<html>
+<head>
+    <title>Bulk Add Subjects</title>
+    <?php require $path . 'req/head.php'; ?>
+</head>
+<body>
+    <?php require $path . 'req/navR.php'; ?>
+    <div class="container">
+        <h1>Bulk Add Subjects to Students</h1>
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+            <div class="form-group">
+                <label>Student ID's</label>
+                <input type="text" name="id" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Subject Name</label>
+                <p>Insert Subject name, separated with commas</p>
+                <input type="text" name="subject" class="form-control">
+            </div>
+        </form>
+    </div>
+</body>
+</html>
