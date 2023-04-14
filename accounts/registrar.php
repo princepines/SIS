@@ -49,16 +49,18 @@ if($stmt = $mysqli->prepare($sql)){
 ?>
 
 <html>
+
 <head>
     <title><?php echo $fname ?> Information</title>
     <?php require $path . 'req/head.php'; ?>
 </head>
+
 <body style="background-color:whitesmoke !important;">
     <?php require $path . 'req/navR.php'; ?>
     <div class="main">
-    <h1>Welcome, <?php echo $fname ?></h1><br>
+        <h1>Welcome, <?php echo $fname ?></h1><br>
         <div class="row">
-        <div class="col">
+            <div class="col">
                 <h3>News:</h3>
                 <?php
                 for($i = 0; $i < count($t); $i++){
@@ -71,4 +73,5 @@ if($stmt = $mysqli->prepare($sql)){
         </div>
     </div>
 </body>
+
 </html>

@@ -33,27 +33,26 @@ if($mysqli === false){
         )";
         if($mysqli->query($sql) === true){
             $sql = "CREATE TABLE IF NOT EXISTS payments (
-                id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-                studentid INT NOT NULL,
+                paymentid INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+                id INT NOT NULL,
                 amount INT NOT NULL,
                 paymenttype VARCHAR(100) NOT NULL,
-                date DATE NOT NULL,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY (studentid) REFERENCES users(id)
+                FOREIGN KEY (id) REFERENCES users(id)
             )";
             if($mysqli->query($sql) === true){
                 $sql = "CREATE TABLE IF NOT EXISTS grades (
-                    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-                    studentid INT NOT NULL,
+                    gradeid INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+                    id INT NOT NULL,
                     subject VARCHAR(255) NOT NULL,
                     grade INT NOT NULL,
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                    FOREIGN KEY (studentid) REFERENCES users(id),
+                    FOREIGN KEY (id) REFERENCES users(id),
                     FOREIGN KEY (subject) REFERENCES subjects(subject)
                 )";
                 if($mysqli->query($sql) === true){
                     $sql = "CREATE TABLE IF NOT EXISTS news (
-                        id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+                        newsid INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
                         title VARCHAR(255) NOT NULL,
                         content TEXT NOT NULL,
                         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP

@@ -52,7 +52,7 @@ function getStudentName($id){
                 </thead>
                 <tbody>
                     <?php
-                    $sql = "SELECT id, studentid, amount, paymenttype, date FROM payments where studentid = ?";
+                    $sql = "SELECT paymentid, id, amount, paymenttype, created_at FROM payments where id = ?";
                     if($stmt = $mysqli->prepare($sql)){
                         // Bind variables to the prepared statement as parameters
                         $stmt->bind_param("s", $param_id);

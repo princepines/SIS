@@ -25,20 +25,27 @@ if($stmt = $mysqli->prepare($sql)){
     }
 }
 
-$news = "";
-$sqlnews = "SELECT news FROM news";
-if($stmt = $mysqli->prepare($sqlnews)){
+$t = $c = $d = array();
+// query the sql to get the news and store it in $t, $c and $d
+$sql = "SELECT title, content, created_at FROM news";
+if($stmt = $mysqli->prepare($sql)){
     // Attempt to execute the prepared statement
     if($stmt->execute()){
         // Store result
         $stmt->store_result();
         
         // Check if username exists
-        if($stmt->num_rows == 1){                    
+        if($stmt->num_rows > 0){                    
             // Bind result variables
-            $stmt->bind_result($news);
+            $stmt->bind_result($title, $content, $date);
+            while($stmt->fetch()){
+                array_push($t, $title);
+                array_push($c, $content);
+                array_push($d, $date);
+            }
         }
     }
+
 }
 ?>
 
@@ -52,9 +59,15 @@ if($stmt = $mysqli->prepare($sqlnews)){
     <div class="main">
     <h1>Welcome, <?php echo $fname ?></h1><br>
         <div class="row">
-            <div class="col">
+        <div class="col">
                 <h3>News:</h3>
-                <p style="font-size: 18px;"><?php echo $news; ?></p>
+                <?php
+                for($i = 0; $i < count($t); $i++){
+                    echo "<h4>" . $t[$i] . "</h4>";
+                    echo "<p>" . $c[$i] . "</p>";
+                    echo "<p>" . $d[$i] . "</p>";
+                }
+                ?>
             </div>
         </div>
     </div>

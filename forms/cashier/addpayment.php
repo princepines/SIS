@@ -31,11 +31,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Check input errors before inserting in database
     if(empty($id_err) && empty($amount_err) && empty($paymenttype_err)){
         // Prepare an insert statement
-        $sql = "INSERT INTO payments (id, amount, paymenttype, date) VALUES (?, ?, ?, ?)";
+        $sql = "INSERT INTO payments (id, amount, paymenttype) VALUES (?, ?, ?)";
          
         if($stmt = $mysqli->prepare($sql)){
             // Bind variables to the prepared statement as parameters
-            $stmt->bind_param("ssss", $param_id, $param_amount, $param_paymenttype, $param_date);
+            $stmt->bind_param("sss", $param_id, $param_amount, $param_paymenttype);
             
             // Set parameters
             $param_id = $id;
@@ -46,7 +46,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             // Attempt to execute the prepared statement
             if($stmt->execute()){
                 // Redirect to login page
-                echo '<script>alert("Successfully Added User!")</script>';
+                echo '<script>alert("Successfully Added Payment Record!")</script>';
             } else{
                 echo '<script>alert("An Error Occured! Please try again later.")</script>';
             }
