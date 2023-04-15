@@ -4,6 +4,7 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . '/SIS/config.php';
 
 $id = $subject = array();
+$aid = "";
 $id_err = $subject_err = "";
 
 // Processing form data when form is submitted
@@ -21,11 +22,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     } else{
         $subject = explode(",", trim($_POST["subject"]));
     }
+
+    //Validate Adviser ID
+    if(empty(trim($_POST["aid"]))){
+        $aid_err = "Please enter a Adviser ID.";
+    } else{
+        $aid = trim($_POST["aid"]);
+    }
     
     // check input errors and insert into database
     if(empty($id_err) && empty($subject_err)){
         // Prepare an insert statement
-        $sql = "INSERT INTO subjects (id, subject) VALUES (?, ?)";
+        $sql = "INSERT INTO subjects (id,aid,subject) VALUES (?, ?, ?)";
         
         // insert subject as onw row for each student
         foreach($id as $i){
@@ -33,11 +41,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $subjects = implode(",", $subject);
             if($stmt = $mysqli->prepare($sql)){
                 // Bind variables to the prepared statement as parameters
-                $stmt->bind_param("ss", $param_id, $param_subject);
+                $stmt->bind_param("sss", $param_id, $param_subject, $param_aid);
                 
                 // Set parameters
                 $param_id = $i;
                 $param_subject = $subjects;
+                $param_aid = $aid;
                 
                 // Attempt to execute the prepared statement
                 if($stmt->execute()){
@@ -47,7 +56,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 }
             }
         }
-        echo '<script>alert("Successfully Added Subject to user!")</script>';
+        echo '<script>alert("Successfully Added Subject!")</script>';
         // Close statement
         $stmt->close();
     }
@@ -69,6 +78,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             <div class="form-group">
                 <label>Student ID's</label>
                 <input type="text" name="id" class="form-control">
+            </div><br>
+            <div class="form-group">
+                <label>Adviser ID</label>
+                <input type="text" name="aid" class="form-control">
             </div><br>
             <div class="form-group">
                 <label>Subject Name</label><br>

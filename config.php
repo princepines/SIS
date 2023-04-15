@@ -28,8 +28,10 @@ if($mysqli === false){
     if($mysqli->query($sql) === true){
         $sql = "CREATE TABLE IF NOT EXISTS subjects (
             id INT NOT NULL,
+            adviserid INT NOT NULL,
             subject VARCHAR(255) NOT NULL PRIMARY KEY,
-            FOREIGN KEY (id) REFERENCES users(id)
+            FOREIGN KEY (id) REFERENCES users(id),
+            FOREIGN KEY (adviserid) REFERENCES users(id)
         )";
         if($mysqli->query($sql) === true){
             $sql = "CREATE TABLE IF NOT EXISTS payments (

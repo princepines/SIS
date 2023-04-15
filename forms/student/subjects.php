@@ -49,6 +49,62 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/SIS/config.php';
                     }
                 }
                 // do grades section
+                $sql = "SELECT grade FROM grades WHERE id = ?";
+                if($stmt = $mysqli->prepare($sql)){
+                    // Bind variables to the prepared statement as parameters
+                    $stmt->bind_param("s", $param_id);
+                    
+                    // Set parameters
+                    $param_id = $_COOKIE["id"];
+                    
+                    // Attempt to execute the prepared statement
+                    if($stmt->execute()){
+                        // Store result
+                        $stmt->store_result();
+                        
+                        // check subjects seperate from comma to table
+                        if($stmt->num_rows == 1){                    
+                            // Bind result variables
+                            $stmt->bind_result($grade);
+                            if($stmt->fetch()){
+                                (array)$grade = explode(",", $grade);
+                                foreach($grade as $g){
+                                    echo "<tr><td>" . $g . "</td></tr>";
+                                }
+                            }
+                        }
+                    }
+                }
+                // compute the grades and display the average
+                $sql = "SELECT grade FROM grades WHERE id = ?";
+                if($stmt = $mysqli->prepare($sql)){
+                    // Bind variables to the prepared statement as parameters
+                    $stmt->bind_param("s", $param_id);
+                    
+                    // Set parameters
+                    $param_id = $_COOKIE["id"];
+                    
+                    // Attempt to execute the prepared statement
+                    if($stmt->execute()){
+                        // Store result
+                        $stmt->store_result();
+                        
+                        // check subjects seperate from comma to table
+                        if($stmt->num_rows == 1){                    
+                            // Bind result variables
+                            $stmt->bind_result($grade);
+                            if($stmt->fetch()){
+                                (array)$grade = explode(",", $grade);
+                                $sum = 0;
+                                foreach($grade as $g){
+                                    $sum += $g;
+                                }
+                                $average = $sum / count($grade);
+                                echo "<tr><td>Average: " . $average . "</td></tr>";
+                            }
+                        }
+                    }
+                }
                 ?>
             </tbody>
         </table>
