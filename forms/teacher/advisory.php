@@ -2,6 +2,33 @@
 // Check Class Advisories for assigned subjects
 require_once $_SERVER['DOCUMENT_ROOT'] . '/SIS/config.php';
 
+function getStudentName($id){
+    global $mysqli;
+    $sql = "SELECT firstname, lastname FROM users WHERE id = ?";
+    if($stmt = $mysqli->prepare($sql)){
+        // Bind variables to the prepared statement as parameters
+        $stmt->bind_param("s", $param_id);
+        
+        // Set parameters
+        $param_id = $id;
+        
+        // Attempt to execute the prepared statement
+        if($stmt->execute()){
+            // Store result
+            $stmt->store_result();
+            
+            // Check if username exists
+            if($stmt->num_rows == 1){                    
+                // Bind result variables
+                $stmt->bind_result($fname, $lname);
+                if($stmt->fetch()){
+                    return $fname . " " . $lname;
+                }
+            }
+        }
+    }
+}
+
 ?>
 
 <html>

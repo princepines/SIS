@@ -2,7 +2,7 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . "/SIS/config.php";
 
 
-$lname = $fname = "";
+$fname = $lname = "";
 // query the sql to get the firstname and lastname of user
 $sql = "SELECT firstname, lastname FROM users WHERE id = ?";
 if($stmt = $mysqli->prepare($sql)){
@@ -17,10 +17,14 @@ if($stmt = $mysqli->prepare($sql)){
         // Store result
         $stmt->store_result();
         
-        // Check if username exists, if yes then verify password
+        // Check if username exists
         if($stmt->num_rows == 1){                    
             // Bind result variables
             $stmt->bind_result($fname, $lname);
+            if($stmt->fetch()){
+                $fname = $fname;
+                $lname = $lname;
+            }
         }
     }
 }

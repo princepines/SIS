@@ -8,8 +8,8 @@
       <a class="nav-item nav-link active" href="/">Home</a>
       <a class="nav-item nav-link" href="/SIS/forms/cashier/addpayment.php">Add Payment</a>
       <a class="nav-item nav-link" href="/SIS/forms/cashier/precord.php">Payment Records</a>
-      <a class="nav-item nav-link" href="../about.php">About</a>
-      <a class="nav-item nav-link" href="../logout.php">Logout</a>
+      <a class="nav-item nav-link" href="/SIS/about.php">About</a>
+      <a class="nav-item nav-link" href="/SIS/logout.php">Logout</a>
     </div>
   </div>
   <span class="navbar-text" style="font-family: Kanit, sans-serif;">

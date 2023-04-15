@@ -36,7 +36,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/SIS/config.php';
                         $stmt->store_result();
                         
                         // check subjects seperate from comma to table
-                        if($stmt->num_rows == 1){                    
+                        if($stmt->num_rows > 0){                    
                             // Bind result variables
                             $stmt->bind_result($subject);
                             if($stmt->fetch()){

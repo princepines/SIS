@@ -53,6 +53,7 @@ if($stmt = $mysqli->prepare($sql)){
 
 
 // fetch the subjects of the student
+$subjects = array();
 $sql = "SELECT subject FROM subjects WHERE id = ?";
 if($stmt = $mysqli->prepare($sql)){
     // Bind variables to the prepared statement as parameters
@@ -67,7 +68,7 @@ if($stmt = $mysqli->prepare($sql)){
         $stmt->store_result();
         
         // Check if username exists
-        if($stmt->num_rows == 1){                    
+        if($stmt->num_rows > 0){                    
             // Bind result variables
             $stmt->bind_result($subject);
             while($stmt->fetch()){
@@ -97,7 +98,7 @@ if($stmt = $mysqli->prepare($sql)){
                     <?php
                     for($i = 0; $i < count($t); $i++){
                         echo "<tr>";
-                        echo '<th scope="col"><h3>' . $t[$i] . '</h3></th>';
+                        echo '<th scope="col"><h3>gt`=yt' . $t[$i] . '</h3></th>';
                         echo "</tr>";
                         echo "<tr>";
                         echo '<td>' . $c[$i] . '<br><br><small>'. $d[$i] . '</td>';
@@ -123,6 +124,7 @@ if($stmt = $mysqli->prepare($sql)){
             </div>
         </div>
     </div>
+
 </body>
 
 </html>

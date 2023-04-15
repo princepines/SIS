@@ -8,8 +8,8 @@
       <a class="nav-item nav-link active" href="/">Home</a>
       <a class="nav-item nav-link" href="/SIS/forms/registrar/register.php">Register User</a>
       <a class="nav-item nav-link" href="/SIS/forms/registrar/addsub.php">Add Subjects</a>
-      <a class="nav-item nav-link" href="../about.php">About</a>
-      <a class="nav-item nav-link" href="../logout.php">Logout</a>      
+      <a class="nav-item nav-link" href="/SIS/about.php">About</a>
+      <a class="nav-item nav-link" href="/SIS/logout.php">Logout</a>      
     </div>
   </div>
   <span class="navbar-text" style="font-family: Kanit, sans-serif;">

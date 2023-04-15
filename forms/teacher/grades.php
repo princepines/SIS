@@ -31,7 +31,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // check input errors and insert into database
     if(empty($id_err) && empty($subject_err) && empty($grade_err)){
         // Prepare an insert statement
-        $sql = "INSERT INTO grades (id,subject,grade) VALUES (?, ?, ?)";
+        $sql = "INSERT INTO grades (id, subject, grade) VALUES (?, ?, ?)";
         
         if($stmt = $mysqli->prepare($sql)){
             // Bind variables to the prepared statement as parameters
@@ -61,7 +61,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         <?php require $path . 'req/head.php'; ?>
     </head>
     <body>
-        // form to insert student id and grade on subject assigned to teacher
         <?php require $path . 'req/navT.php'; ?>
         <div class="container">
         <h1>Submit Grades</h1>
@@ -71,7 +70,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <input type="text" name="id" class="form-control">
             </div><br>
             <div class="form-group">
-                <label>Subject</label>
+                <label>Subject ID</label>
                 <input type="text" name="subject" class="form-control">
             <div class="form-group">
                 <label>Grade</label>

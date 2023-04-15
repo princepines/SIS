@@ -46,11 +46,11 @@ if($mysqli === false){
                 $sql = "CREATE TABLE IF NOT EXISTS grades (
                     gradeid INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
                     id INT NOT NULL,
-                    subject VARCHAR(255) NOT NULL,
+                    subject INT NOT NULL,
                     grade INT NOT NULL,
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     FOREIGN KEY (id) REFERENCES users(id),
-                    FOREIGN KEY (subject) REFERENCES subjects(subject)
+                    FOREIGN KEY (subject) REFERENCES subjects(id)
                 )";
                 if($mysqli->query($sql) === true){
                     $sql = "CREATE TABLE IF NOT EXISTS news (
