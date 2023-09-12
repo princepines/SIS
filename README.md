@@ -1,2 +1,2 @@
 # Self-SIS
-fk integrative programming groupings, i made my own SIS. made by myself only!
+Sa project na to, binuhat ko mga kaklase po -_-
